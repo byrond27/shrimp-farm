@@ -1,5 +1,7 @@
 # Shrimp Farm
 
+![CI Develop](https://github.com/byrond27/shrimp-farm/workflows/CI/badge.svg?branch=develop)
+
 Shrimp Monorepo backend (Rest API)
 
 ## Requirements
