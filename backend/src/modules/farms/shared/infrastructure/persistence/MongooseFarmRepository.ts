@@ -45,4 +45,13 @@ export class MongooseFarmRepository implements FarmRepository {
       console.log(err)
     }
   }
+
+  async getFarms(): Promise<any> {
+    try {
+      const results = await FarmSchema.find({})
+      return results
+    } catch (err) {
+      console.log(err)
+    }
+  }
 }

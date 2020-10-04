@@ -4,4 +4,5 @@ export interface FarmRepository {
   createFarm(farm: Farm): Farm
   editFarmById(data: any): Promise<any>
   deleteFarmById(id: string): Promise<any>
+  getFarms(): Promise<any>
 }

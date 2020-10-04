@@ -4,8 +4,14 @@ import { MongooseFarmRepository } from '../../../../modules/farms/shared/infrast
 import { CreateFarm } from '../../../../modules/farms/application/create/CreateFarm'
 import { EditFarm } from '../../../../modules/farms/application/edit/EditFarm'
 import { DeleteFarm } from '../../../../modules/farms/application/delete/DeleteFarm'
+import { GetFarms } from '../../../../modules/farms/application/get/GetFarms'
 
 const router = express.Router()
+
+router.get('/', (req: any, res: any) => {
+  const getFarm = new GetFarms(new MongooseFarmRepository())
+  return getFarm.execute(req, res)
+})
 
 router.post('/', (req: any, res: any) => {
   const createFarm = new CreateFarm(new MongooseFarmRepository())
