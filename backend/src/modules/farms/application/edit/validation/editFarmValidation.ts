@@ -8,7 +8,7 @@ module.exports = function validation(data: any) {
   let errors: any = {}
   data.id = !isEmpty(data.id) ? data.id : ''
   data.name = !isEmpty(data.name) ? data.name : ''
-  data.size = !isEmpty(data.size) ? data.size : ''
+  data.size = data.size ? data.size : 0
 
   if (Validator.isEmpty(data.id)) {
     errors.id = 'id is required'
@@ -18,7 +18,7 @@ module.exports = function validation(data: any) {
     errors.name = 'name is required'
   }
 
-  if (Validator.isEmpty(data.size)) {
+  if (data.size < 0) {
     errors.size = 'size is required'
   }
 

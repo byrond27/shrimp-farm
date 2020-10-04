@@ -16,7 +16,6 @@ export class EditFarm {
 
   async execute(req: any, res: any) {
     const { errors, isValid } = validation(req.body)
-
     if (!isValid) {
       return res.status(400).json(errors)
     }

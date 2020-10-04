@@ -5,7 +5,7 @@ export const GET_USER_PROFILE = 'GET_USER_PROFILE'
 export const GET_FARMS = 'GET_FARMS'
 
 export const createFarm = (data, dispatch) => {
-  axios.post('/api/farms/create', data).catch((err) =>
+  axios.post('/api/farms', data).catch((err) =>
     dispatch({
       type: GET_ERRORS,
       payload: err.response.data,
@@ -37,12 +37,13 @@ export const deleteFarm = (data, dispatch) => {
 }
 
 export const editFarm = (data, dispatch) => {
-  axios.post('/api/farms/edit', data).catch((err) =>
+  axios.put('/api/farms/', data).catch((err) =>
     dispatch({
       type: GET_ERRORS,
       payload: err.response.data,
     })
   )
+  getFarms(dispatch)
 }
 
 export const getCurrentFarm = (farms) => {

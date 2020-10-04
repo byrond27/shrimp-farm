@@ -31,6 +31,7 @@ export class MongooseFarmRepository implements FarmRepository {
       let result = await FarmSchema.findOneAndUpdate(filter, update, {
         returnOriginal: false,
       })
+
       return new Farm(result.id, result.name, result.total_size)
     } catch (err) {
       console.log(err)

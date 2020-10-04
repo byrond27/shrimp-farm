@@ -24,6 +24,7 @@ export default function Farms(props) {
 
   const [currentFarmName, setCurrentFarmName] = useState('')
   const [currentFarmId, setCurrentFarmId] = useState('')
+  const [currentFarmSize, setCurrentFarmSize] = useState('')
 
   useEffect(() => {
     setLoad(false)
@@ -44,6 +45,7 @@ export default function Farms(props) {
     setEditModalState(true)
     setCurrentFarmId(farm.id)
     setCurrentFarmName(farm.name)
+    setCurrentFarmSize(farm.total_size)
   }
 
   const countFarms = farms && farms.length
@@ -119,6 +121,7 @@ export default function Farms(props) {
     const newFarm = {
       id: currentFarmId,
       name: currentFarmName,
+      size: currentFarmSize,
     }
     e.preventDefault()
     editFarm(newFarm, context.dispatch)
