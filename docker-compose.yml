@@ -32,6 +32,24 @@ services:
     networks:
       - webappnetwork
 
+  client:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    image: myapp-client
+    stdin_open: true
+    container_name: myapp-react-client
+    command: npm start
+    volumes:
+      - ./frontend/:/usr/app
+      - /usr/app/node_modules
+    depends_on:
+      - backend
+    ports:
+      - 3000:3000
+    networks:
+      - webappnetwork
+
 volumes:
   mongodbData:
     driver: local
