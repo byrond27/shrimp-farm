@@ -36,4 +36,13 @@ export class MongooseFarmRepository implements FarmRepository {
       console.log(err)
     }
   }
+
+  async deleteFarmById(id: String): Promise<any> {
+    try {
+      const results = await FarmSchema.deleteOne({ id: id })
+      return results
+    } catch (err) {
+      console.log(err)
+    }
+  }
 }
