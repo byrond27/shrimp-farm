@@ -14,3 +14,6 @@ ping-mongo:
 
 build:
 	@docker-compose build
+
+test:
+	@docker-compose exec -T backend npm run test
