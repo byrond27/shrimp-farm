@@ -17,7 +17,6 @@ export const getFarms = (dispatch) => {
   axios
     .get('/api/farms/')
     .then((res) => {
-      console.log(res.data)
       dispatch(getCurrentFarm(res.data))
     })
     .catch((err) =>
@@ -29,7 +28,7 @@ export const getFarms = (dispatch) => {
 }
 
 export const deleteFarm = (data, dispatch) => {
-  axios.post('/api/farms/delete/', data).catch((err) =>
+  axios.delete('/api/farms/', { data: { id: data.id } }).catch((err) =>
     dispatch({
       type: GET_ERRORS,
       payload: err.response.data,

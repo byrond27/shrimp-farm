@@ -17,7 +17,7 @@ const FarmContextProvider = (props) => {
   useEffect(() => {
     localStorage.setItem('state', JSON.stringify(state))
   }, [state])
-  console.log(state)
+
   return (
     <FarmContext.Provider value={{ state, dispatch }}>
       {props.children}

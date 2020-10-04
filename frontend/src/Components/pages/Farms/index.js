@@ -17,33 +17,33 @@ import {
 export default function Farms(props) {
   const context = useContext(FarmContext)
   const { errors, farms } = context.state
-  const [name, setname] = useState('')
+  const [name, setName] = useState('')
   const [isModalOpen, setModalState] = useState(false)
   const [isEditModalOpen, setEditModalState] = useState(false)
-  const [load, setload] = useState(false)
+  const [load, setLoad] = useState(false)
 
-  const [currentFarmName, setcurrentFarmName] = useState('')
-  const [currentFarmId, setcurrentFarmId] = useState('')
+  const [currentFarmName, setCurrentFarmName] = useState('')
+  const [currentFarmId, setCurrentFarmId] = useState('')
 
   useEffect(() => {
-    setload(false)
+    setLoad(false)
     getFarms(context.dispatch)
   }, [load, context.dispatch])
 
-  const ondeleteFarm = (id, name) => {
+  const onDeleteFarm = (id, name) => {
     if (window.confirm('Are you sure to delete the farm ' + name + '?')) {
       const farm = {
         id: id,
       }
       deleteFarm(farm, context.dispatch)
-      setload(true)
+      setLoad(true)
     }
   }
 
   const onClickEdit = (farm) => {
     setEditModalState(true)
-    setcurrentFarmId(farm.id)
-    setcurrentFarmName(farm.name)
+    setCurrentFarmId(farm.id)
+    setCurrentFarmName(farm.name)
   }
 
   const countFarms = farms && farms.length
@@ -52,7 +52,7 @@ export default function Farms(props) {
     farms.map((farm) => (
       <tr key={farm.id}>
         <td>{farm.name}</td>
-        <td>{farm.total_size}</td>
+        <td className={'center-align'}>{farm.total_size}</td>
         <td className={'center'} style={{ display: 'inline-flex' }}>
           <div className={'waves-effect waves-light white btn'}>
             <i
@@ -65,7 +65,7 @@ export default function Farms(props) {
           </div>{' '}
           <div
             className={'waves-effect waves-light white btn'}
-            onClick={() => ondeleteFarm(farm.id, farm.name)}>
+            onClick={() => onDeleteFarm(farm.id, farm.name)}>
             <i
               className={' material-icons red-text accent-3 tooltipped'}
               data-position='right'
@@ -82,8 +82,8 @@ export default function Farms(props) {
       <thead>
         <tr>
           <th>Name</th>
-          <th>Total Size</th>
-          <th>Options</th>
+          <th className={'center-align'}>Total Size</th>
+          <th className={'center-align'}>Options</th>
         </tr>
       </thead>
       <tbody>{listFarms}</tbody>
@@ -111,7 +111,7 @@ export default function Farms(props) {
       let toastHTML = '<span className="rounded">Farm created!</span>'
       M.toast({ html: toastHTML, classes: 'rounded green' })
       getFarms(context.dispatch)
-      setload(true)
+      setLoad(true)
     }
   }
 
@@ -127,7 +127,7 @@ export default function Farms(props) {
       let toastHTML = '<span className="rounded">Farm updated!</span>'
       M.toast({ html: toastHTML, classes: 'rounded green' })
       getFarms(context.dispatch)
-      setload(true)
+      setLoad(true)
     }
   }
 
@@ -139,13 +139,11 @@ export default function Farms(props) {
             <h4>Farms</h4>
             {countFarms > 0 && (
               <p className='grey-text text-darken-1'>
-                You have {countFarms} farms created
+                You have {countFarms} farms
               </p>
             )}
           </div>
-          <div
-            className='col s6 center'
-            style={{ paddingLeft: '11.250px', textAlign: 'right' }}>
+          <div className='col s6 center' style={{ textAlign: 'right' }}>
             <div
               onClick={(e) => setModalState(true)}
               style={{
@@ -169,7 +167,7 @@ export default function Farms(props) {
                 </div>
                 <div className='input-field col s12'>
                   <input
-                    onChange={(e) => setname(e.target.value, true)}
+                    onChange={(e) => setName(e.target.value, true)}
                     value={name}
                     error={errors.name}
                     id='name'
@@ -216,7 +214,7 @@ export default function Farms(props) {
                 </div>
                 <div className='input-field col s12'>
                   <input
-                    onChange={(e) => setcurrentFarmName(e.target.value, true)}
+                    onChange={(e) => setCurrentFarmName(e.target.value, true)}
                     value={currentFarmName}
                     error={errors.name}
                     id='name'
