@@ -11,7 +11,7 @@ const FarmSchema = new Schema({
     type: String,
     required: true,
   },
-  farm_size: {
+  total_size: {
     type: Number,
     required: true,
   },

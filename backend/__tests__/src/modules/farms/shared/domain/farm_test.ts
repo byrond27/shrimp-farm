@@ -6,7 +6,7 @@ faker.locale = 'es'
 let farm: Farm
 let data: any = {
   name: faker.name.findName(),
-  farm_size: 0,
+  total_size: 0,
 }
 
 beforeEach(() => {
@@ -18,6 +18,6 @@ describe('Domain Farm', () => {
     expect(farm.name).toEqual(data.name)
   })
   it('should create a farm with size 0', async () => {
-    expect(farm.farm_size).toEqual(data.farm_size)
+    expect(farm.total_size).toEqual(data.total_size)
   })
 })
