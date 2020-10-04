@@ -1,26 +1,28 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from 'react'
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
+import Farms from './Components/pages/Farms'
+import Navbar from './Components/layout/NavBar'
+import Sidebar from './Components/dashboard/Sidebar'
+
+import Dashboard from './Components/dashboard/Dashboard'
+import './App.css'
+import FarmContextProvider from './Context/FarmContext'
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    <FarmContextProvider>
+      <Router>
+        <div className='App'>
+          <Navbar />
+          <Sidebar />
+          <Route exact path='/' component={Dashboard} />
+          <Switch>
+            <Route exact path='/farms' component={Farms} />
+          </Switch>
+        </div>
+      </Router>
+    </FarmContextProvider>
+  )
 }
 
-export default App;
+export default App
