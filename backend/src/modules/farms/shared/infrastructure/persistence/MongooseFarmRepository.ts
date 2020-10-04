@@ -23,7 +23,6 @@ export class MongooseFarmRepository implements FarmRepository {
 
   async editFarmById(data: any): Promise<any> {
     try {
-      console.log(data)
       const filter = { id: data.id }
       const update = {
         name: data.name,
