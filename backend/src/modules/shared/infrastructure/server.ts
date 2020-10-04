@@ -1,8 +1,16 @@
-const express = require('express')
+import express from 'express'
+const bodyParser = require('body-parser')
 const mongoose = require('mongoose')
 const index = require('../../../app/http/routes/api/index')
+const farms = require('../../../app/http/routes/api/farms')
 
 const app = express()
+app.use(
+  bodyParser.urlencoded({
+    extended: false,
+  })
+)
+app.use(bodyParser.json())
 
 mongoose.set('useFindAndModify', false)
 mongoose
@@ -22,5 +30,6 @@ mongoose
   .catch((err: any) => console.log(err))
 
 app.use('/', index)
+app.use('/api/farms', farms)
 
 module.exports = app
