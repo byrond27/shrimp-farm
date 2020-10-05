@@ -38,7 +38,7 @@ export class DeletePond {
     const farm = new Farm(
       currentFarm.id,
       currentFarm.name,
-      currentFarm.totalSize - currentPond.size
+      Number(currentFarm.totalSize) - Number(currentPond.size)
     )
 
     await this.farmRepository.editFarmById(farm)

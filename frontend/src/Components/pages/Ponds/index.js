@@ -28,6 +28,7 @@ export default function Ponds(props) {
   const [currentPondName, setCurrentPondName] = useState('')
   const [currentPondId, setCurrentPondId] = useState('')
   const [currentPondSize, setCurrentPondSize] = useState('')
+  const [currentFarmID, setCurrentFarm] = useState('')
 
   useEffect(() => {
     setLoad(false)
@@ -49,7 +50,8 @@ export default function Ponds(props) {
     setEditModalState(true)
     setCurrentPondId(pond.id)
     setCurrentPondName(pond.name)
-    setCurrentPondSize(pond.total_size)
+    setCurrentPondSize(pond.size)
+    setCurrentFarm(pond.farmID)
   }
 
   const optionsFarms =
@@ -136,6 +138,7 @@ export default function Ponds(props) {
       id: currentPondId,
       name: currentPondName,
       size: currentPondSize,
+      farmID: currentFarmID,
     }
     e.preventDefault()
     editPond(newPond, context.dispatch)
@@ -257,6 +260,21 @@ export default function Ponds(props) {
                     {currentPondName}
                   </p>
                 </div>
+                <div className='input-field col s12 style="margin-top: 8px;"'>
+                  <select
+                    className='browser-default'
+                    onChange={(e) => setFarm(e.target.value)}
+                    defaultValue={currentFarmID}>
+                    <option value='' disabled defaultValue>
+                      Choose your farm
+                    </option>
+                    {optionsFarms}
+                  </select>
+                  <span className='red-text'>{errors.farm}</span>
+                  <label htmlFor='Name' className='active'>
+                    Pond Name
+                  </label>
+                </div>
                 <div className='input-field col s12'>
                   <input
                     onChange={(e) => setCurrentPondName(e.target.value, true)}
@@ -270,6 +288,22 @@ export default function Ponds(props) {
                   />
                   <label htmlFor='Name' className='active'>
                     Name
+                  </label>
+                  <span className='red-text'>{errors.name}</span>
+                </div>
+                <div className='input-field col s12'>
+                  <input
+                    onChange={(e) => setCurrentPondSize(e.target.value, true)}
+                    value={currentPondSize}
+                    error={errors.currentPondSize}
+                    id='name'
+                    type='text'
+                    className={classnames('active', {
+                      invalid: errors.currentPondSize,
+                    })}
+                  />
+                  <label htmlFor='Name' className='active'>
+                    Size
                   </label>
                   <span className='red-text'>{errors.name}</span>
                 </div>

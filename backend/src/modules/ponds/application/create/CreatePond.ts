@@ -40,7 +40,7 @@ export class CreatePond {
     const farm = new Farm(
       currentFarm.id,
       currentFarm.name,
-      currentFarm.totalSize + newPond.size
+      Number(currentFarm.totalSize) + Number(newPond.size)
     )
     await this.farmRepository.editFarmById(farm)
     await res.json(this.pondRepository.createPond(newPond))

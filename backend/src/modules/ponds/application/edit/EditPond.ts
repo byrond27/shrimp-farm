@@ -37,12 +37,11 @@ export class EditPond {
     const currentPond = await this.pondRepository.getPondById(newPond.id)
 
     const currentFarm = await this.farmRepository.getFarmByID(req.body.farmID)
-
-    const farm = new Farm(
-      currentFarm.id,
-      currentFarm.name,
-      currentFarm.totalSize - currentPond.size + newPond.size
-    )
+    const newFarmSize =
+      Number(currentFarm.totalSize) -
+      Number(currentPond.size) +
+      Number(newPond.size)
+    const farm = new Farm(currentFarm.id, currentFarm.name, newFarmSize)
 
     await this.farmRepository.editFarmById(farm)
 
