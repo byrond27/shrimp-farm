@@ -66,4 +66,13 @@ export class MongoosePondRepository implements PondRepository {
       console.log(err)
     }
   }
+
+  async deletePondsByFarmID(id: string): Promise<any> {
+    try {
+      const result = await PondSchema.deleteMany({ farmID: id })
+      return result
+    } catch (err) {
+      console.log(err)
+    }
+  }
 }
