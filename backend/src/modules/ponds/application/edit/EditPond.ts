@@ -19,7 +19,12 @@ export class EditPond {
     if (!isValid) {
       return res.status(400).json(errors)
     }
-    const newPond = new Pond(req.body.id, req.body.name, req.body.size)
+    const newPond = new Pond(
+      req.body.id,
+      req.body.farmID,
+      req.body.name,
+      req.body.size
+    )
     const editPond = await this.pondRepository.editPondById(newPond)
     return res.status(200).json(editPond)
   }

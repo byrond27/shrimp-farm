@@ -3,7 +3,7 @@ import 'reflect-metadata'
 import { MongoosePondRepository } from '../../../../modules/ponds/shared/infrastructure/persistence/MongoosePondRepository'
 import { MongooseFarmRepository } from '../../../../modules/farms/shared/infrastructure/persistence/MongooseFarmRepository'
 import { CreatePond } from '../../../../modules/ponds/application/create/CreatePond'
-// import { EditPond } from '../../../../modules/ponds/application/edit/EditPond'
+import { EditPond } from '../../../../modules/ponds/application/edit/EditPond'
 // import { DeletePond } from '../../../../modules/ponds/application/delete/DeletePond'
 // import { GetPonds } from '../../../../modules/ponds/application/get/GetPonds'
 
@@ -22,10 +22,10 @@ router.post('/', (req: any, res: any) => {
   return createPond.execute(req, res)
 })
 
-// router.put('/', (req: any, res: any) => {
-//   const editStore = new EditPond(new MongoosePondRepository())
-//   return editStore.execute(req, res)
-// })
+router.put('/', (req: any, res: any) => {
+  const editStore = new EditPond(new MongoosePondRepository())
+  return editStore.execute(req, res)
+})
 
 // router.delete('/', (req: any, res: any) => {
 //   const deletePond = new DeletePond(new MongoosePondRepository())
