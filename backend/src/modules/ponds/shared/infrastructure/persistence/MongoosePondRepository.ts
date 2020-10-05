@@ -5,6 +5,15 @@ import { Pond } from '../../../domain/Pond'
 const PondSchema = require('./models/Pond')
 
 export class MongoosePondRepository implements PondRepository {
+  async getPonds(): Promise<any> {
+    try {
+      const results = await PondSchema.find({})
+      return results
+    } catch (err) {
+      console.log(err)
+    }
+  }
+
   createPond(pond: Pond): Pond | any {
     try {
       const savePond = new PondSchema({
@@ -43,15 +52,6 @@ export class MongoosePondRepository implements PondRepository {
   async deletePondById(id: String): Promise<any> {
     try {
       const results = await PondSchema.deleteOne({ id: id })
-      return results
-    } catch (err) {
-      console.log(err)
-    }
-  }
-
-  async getPonds(): Promise<any> {
-    try {
-      const results = await PondSchema.find({})
       return results
     } catch (err) {
       console.log(err)

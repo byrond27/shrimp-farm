@@ -4,6 +4,15 @@ import { Farm } from '../../../domain/Farm'
 const FarmSchema = require('./models/Farm')
 
 export class MongooseFarmRepository implements FarmRepository {
+  async getFarms(): Promise<any> {
+    try {
+      const results = await FarmSchema.find({})
+      return results
+    } catch (err) {
+      console.log(err)
+    }
+  }
+
   createFarm(farm: Farm): Farm | any {
     try {
       const saveFarm = new FarmSchema({
@@ -41,15 +50,6 @@ export class MongooseFarmRepository implements FarmRepository {
   async deleteFarmById(id: String): Promise<any> {
     try {
       const results = await FarmSchema.deleteOne({ id: id })
-      return results
-    } catch (err) {
-      console.log(err)
-    }
-  }
-
-  async getFarms(): Promise<any> {
-    try {
-      const results = await FarmSchema.find({})
       return results
     } catch (err) {
       console.log(err)

@@ -31,6 +31,7 @@ export class DeleteFarm {
 
     await this.FarmRepository.deleteFarmById(req.body.id)
     await this.PondRepository.deletePondsByFarmID(req.body.id)
+
     return res.status(200).json('Farm Deleted')
   }
 }
