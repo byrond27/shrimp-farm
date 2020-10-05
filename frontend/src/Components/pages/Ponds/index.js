@@ -43,6 +43,7 @@ export default function Ponds() {
       }
       deletePond(pond, context.dispatch)
       getPonds(context.dispatch)
+      getFarms(context.dispatch)
     }
   }
 
