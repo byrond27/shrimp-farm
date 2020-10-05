@@ -153,7 +153,7 @@ export default function Ponds(props) {
 
   return (
     <div className='container'>
-      <div style={{ marginTop: '4rem' }} className='row'>
+      <div className='row mt-4'>
         <div className='col s12'>
           <div className='col s6 left-align'>
             <h4>Ponds</h4>

@@ -37,9 +37,9 @@ Shrimp Monorepo backend (Rest API) and Frontend
 - MongoDB running in port: 27017
 - API (Express) running in port: 5000
 
-### Endpoints
+## Endpoints
 
-## API
+### API
 
 - Index: http://localhost:5000/
 - Farm (GET,POST, PUT, DELETE)
@@ -47,7 +47,7 @@ Shrimp Monorepo backend (Rest API) and Frontend
 - Pond (GET,POST, PUT, DELETE)
   - http://localhost:5000/api/ponds
 
-## Front
+### Front
 
 - Index: http://localhost:300/
 - Farms: http://localhost:3000/farms

@@ -4,7 +4,6 @@ import classnames from 'classnames'
 import M from 'materialize-css'
 import 'react-responsive-modal/styles.css'
 import { Modal } from 'react-responsive-modal'
-import isEmpty from '../../../Context/validations/isEmpty'
 import { FarmContext } from '../../../Context/FarmContext'
 
 import {
@@ -14,22 +13,20 @@ import {
   editFarm,
 } from '../../../Context/actions/Farms'
 
-export default function Farms(props) {
+export default function Farms() {
   const context = useContext(FarmContext)
   const { errors, farms } = context.state
+
   const [name, setName] = useState('')
   const [isModalOpen, setModalState] = useState(false)
-  const [isEditModalOpen, setEditModalState] = useState(false)
-  const [load, setLoad] = useState(false)
-
+  const [isEdit, setIsEdit] = useState('false')
   const [currentFarmName, setCurrentFarmName] = useState('')
   const [currentFarmId, setCurrentFarmId] = useState('')
   const [currentFarmSize, setCurrentFarmSize] = useState('')
 
   useEffect(() => {
-    setLoad(false)
     getFarms(context.dispatch)
-  }, [load, context.dispatch])
+  }, [context.dispatch])
 
   const onDeleteFarm = (id, name) => {
     if (window.confirm('Are you sure to delete the farm ' + name + '?')) {
@@ -37,18 +34,65 @@ export default function Farms(props) {
         id: id,
       }
       deleteFarm(farm, context.dispatch)
-      setLoad(true)
+      getFarms(context.dispatch)
     }
   }
 
   const onClickEdit = (farm) => {
-    setEditModalState(true)
+    setModalState(true)
+    setIsEdit(true)
     setCurrentFarmId(farm.id)
     setCurrentFarmName(farm.name)
     setCurrentFarmSize(farm.total_size)
   }
 
   const countFarms = farms && farms.length
+
+  const onCreateFarm = (e) => {
+    const newFarm = {
+      name: name,
+    }
+    e.preventDefault()
+    if (name !== '') {
+      createFarm(newFarm, context.dispatch)
+      setModalState(false)
+      toast('Farm created!')
+      getFarms(context.dispatch)
+    }
+  }
+
+  const onEditFarm = (e) => {
+    const newFarm = {
+      id: currentFarmId,
+      name: currentFarmName,
+      size: currentFarmSize,
+    }
+    e.preventDefault()
+    editFarm(newFarm, context.dispatch)
+    setModalState(false)
+    toast('Farm updated!')
+  }
+
+  const toast = (message) => {
+    let toastHTML = '<span className="rounded">' + message + '</span>'
+    M.toast({ html: toastHTML, classes: 'rounded green' })
+  }
+
+  const openModal = () => {
+    setModalState(true)
+    setIsEdit(false)
+  }
+
+  const noFarms = (
+    <div className={'container'}>
+      <div className={'row'}>
+        <div className={'col s12 center'}>
+          <h5> No Farms Created</h5>
+        </div>
+      </div>
+    </div>
+  )
+
   const listFarms =
     countFarms > 0 &&
     farms.map((farm) => (
@@ -92,53 +136,11 @@ export default function Farms(props) {
     </table>
   )
 
-  const noFarms = (
-    <div className={'container'}>
-      <div className={'row'}>
-        <div className={'col s12 center'}>
-          <h4> No Farms Created</h4>
-        </div>
-      </div>
-    </div>
-  )
-
-  const onCreateFarm = (e) => {
-    const newFarm = {
-      name: name,
-    }
-    e.preventDefault()
-    if (name !== '') {
-      createFarm(newFarm, context.dispatch)
-      setModalState(false)
-      let toastHTML = '<span className="rounded">Farm created!</span>'
-      M.toast({ html: toastHTML, classes: 'rounded green' })
-      getFarms(context.dispatch)
-      setLoad(true)
-    }
-  }
-
-  const onEditFarm = (e) => {
-    const newFarm = {
-      id: currentFarmId,
-      name: currentFarmName,
-      size: currentFarmSize,
-    }
-    e.preventDefault()
-    editFarm(newFarm, context.dispatch)
-    if (isEmpty(errors)) {
-      setEditModalState(false)
-      let toastHTML = '<span className="rounded">Farm updated!</span>'
-      M.toast({ html: toastHTML, classes: 'rounded green' })
-      getFarms(context.dispatch)
-      setLoad(true)
-    }
-  }
-
   return (
     <div className='container'>
-      <div style={{ marginTop: '4rem' }} className='row'>
-        <div className='col s12'>
-          <div className='col s6 left-align'>
+      <div className='row mt-4'>
+        <div className='col s12 header-page'>
+          <div>
             <h4>Farms</h4>
             {countFarms > 0 && (
               <p className='grey-text text-darken-1'>
@@ -146,112 +148,70 @@ export default function Farms(props) {
               </p>
             )}
           </div>
-          <div className='col s6 center' style={{ textAlign: 'right' }}>
-            <div
-              onClick={(e) => setModalState(true)}
-              style={{
-                borderRadius: '3px',
-                letterSpacing: '1.5px',
-                marginTop: '1rem',
-              }}
-              className='btn btn-large waves-effect green darken-1 hoverable'>
-              Create Farm
-              <i className='material-icons right'>add</i>
-            </div>
+          <div
+            onClick={(e) => openModal()}
+            className='btn btn-large waves-effect green darken-1 hoverable custom-button'>
+            Create Farm
+            <i className='material-icons right'>add</i>
           </div>
-          <div>
-            <Modal
-              open={isModalOpen}
-              onClose={(e) => setModalState(false)}
-              center>
-              <div className={'row'}>
-                <div className='center col s12'>
-                  <h5>Create Farm</h5>
-                </div>
-                <div className='input-field col s12'>
-                  <input
-                    onChange={(e) => setName(e.target.value, true)}
-                    value={name}
-                    error={errors.name}
-                    id='name'
-                    type='text'
-                    className={classnames('', {
-                      invalid: errors.name,
-                    })}
-                  />
-                  <label htmlFor='name' className=''>
-                    Name
-                  </label>
-                  <span className='red-text'>{errors.name}</span>
-                </div>
-                <div
-                  className='col s12 center'
-                  style={{ paddingLeft: '11.250px' }}>
-                  <button
-                    onClick={onCreateFarm}
-                    style={{
-                      width: '200px',
-                      borderRadius: '3px',
-                      letterSpacing: '1.5px',
-                      marginTop: '1rem',
-                    }}
-                    type='submit'
-                    className='btn btn-large waves-effect waves-light hoverable blue accent-3'>
-                    Create
-                    <i className='material-icons right'>add_circle</i>
-                  </button>
-                </div>
-              </div>
-            </Modal>
-            <Modal
-              open={isEditModalOpen}
-              onClose={(e) => setEditModalState(false)}
-              center>
-              <div className={'row'}>
-                <div className='center col s12'>
-                  <h5>Edit Farm</h5>
+        </div>
+        <div>
+          <Modal
+            open={isModalOpen}
+            onClose={(e) => setModalState(false)}
+            center>
+            <div className={'row'}>
+              <div className='center col s12'>
+                <h5>{isEdit ? 'Edit Farm' : 'Create Farm'}</h5>
+                {isEdit ? (
                   <p className='grey-text text-darken-1'>
                     Farm:
                     {currentFarmName}
                   </p>
-                </div>
-                <div className='input-field col s12'>
-                  <input
-                    onChange={(e) => setCurrentFarmName(e.target.value, true)}
-                    value={currentFarmName}
-                    error={errors.name}
-                    id='name'
-                    type='text'
-                    className={classnames('active', {
-                      invalid: errors.name,
-                    })}
-                  />
-                  <label htmlFor='Name' className='active'>
-                    Name
-                  </label>
-                  <span className='red-text'>{errors.name}</span>
-                </div>
-                <div
-                  className='col s12 center'
-                  style={{ paddingLeft: '11.250px' }}>
+                ) : null}
+              </div>
+              <div className='input-field col s12'>
+                <input
+                  onChange={(e) =>
+                    isEdit
+                      ? setCurrentFarmName(e.target.value, true)
+                      : setName(e.target.value, true)
+                  }
+                  value={isEdit ? currentFarmName : name}
+                  error={errors.name}
+                  id='name'
+                  type='text'
+                  className={classnames('', {
+                    invalid: errors.name,
+                  })}
+                />
+                <label htmlFor='name' className=''>
+                  Name
+                </label>
+                <span className='red-text'>{errors.name}</span>
+              </div>
+              <div className='col s12 center'>
+                {isEdit ? (
                   <button
                     onClick={onEditFarm}
-                    style={{
-                      width: '200px',
-                      borderRadius: '3px',
-                      letterSpacing: '1.5px',
-                      marginTop: '1rem',
-                    }}
                     type='submit'
-                    className='btn btn-large waves-effect waves-light hoverable blue accent-3'>
+                    className='btn btn-large waves-effect waves-light hoverable blue accent-3 custom-button'>
                     Update
                     <i className='material-icons right'>create</i>
                   </button>
-                </div>
+                ) : (
+                  <button
+                    onClick={onCreateFarm}
+                    type='submit'
+                    className='btn btn-large waves-effect waves-light hoverable blue accent-3 custom-button'>
+                    Create
+                    <i className='material-icons right'>add_circle</i>
+                  </button>
+                )}
               </div>
-            </Modal>
-            {countFarms > 0 ? table : noFarms}
-          </div>
+            </div>
+          </Modal>
+          {countFarms > 0 ? table : noFarms}
         </div>
       </div>
     </div>
