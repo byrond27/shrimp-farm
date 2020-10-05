@@ -1,0 +1,21 @@
+name: CI
+
+on: [push]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v1
+
+      - name: Start all the environment
+        run: docker-compose up -d
+
+      - name: Wait for the environment to get up
+        uses: jakejarvis/wait-action@master
+        with:
+          time: '15s'
+
+      - name: Run the tests
+        run: make test

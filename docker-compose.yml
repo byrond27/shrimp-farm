@@ -1,0 +1,57 @@
+version: '3.3'
+
+services:
+  mongo:
+    image: mongo
+    container_name: myapp-mongodb
+    restart: always
+    volumes:
+      - mongodbData:/data/db
+      - ./dataset:/dataset/
+    ports:
+      - 27017:27017
+    networks:
+      - webappnetwork
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    image: myapp-server-img
+    container_name: myapp-node-express
+    volumes:
+      - ./backend/:/usr/src/app
+      - /usr/src/app/node_modules
+    ports:
+      - 5000:5000
+    depends_on:
+      - mongo
+    env_file: ./backend/.env
+    environment:
+      - NODE_ENV=development
+    networks:
+      - webappnetwork
+
+  client:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    image: myapp-client
+    stdin_open: true
+    container_name: myapp-react-client
+    command: npm start
+    volumes:
+      - ./frontend/:/usr/app
+      - /usr/app/node_modules
+    depends_on:
+      - backend
+    ports:
+      - 3000:3000
+    networks:
+      - webappnetwork
+
+volumes:
+  mongodbData:
+    driver: local
+networks:
+  webappnetwork:
