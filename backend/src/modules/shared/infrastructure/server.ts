@@ -3,6 +3,7 @@ const bodyParser = require('body-parser')
 const mongoose = require('mongoose')
 const index = require('../../../app/http/routes/api/index')
 const farms = require('../../../app/http/routes/api/farms')
+const ponds = require('../../../app/http/routes/api/ponds')
 
 const app = express()
 app.use(
@@ -31,5 +32,6 @@ mongoose
 
 app.use('/', index)
 app.use('/api/farms', farms)
+app.use('/api/ponds', ponds)
 
 module.exports = app
