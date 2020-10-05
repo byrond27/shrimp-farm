@@ -34,4 +34,16 @@ Shrimp Monorepo backend (Rest API)
 
 ### Endpoints
 
+## API
+
 - Index: http://localhost:5000/
+- Farm (GET,POST, PUT, DELETE)
+  - http://localhost:5000/api/farms
+- Pond (GET,POST, PUT, DELETE)
+  - http://localhost:5000/api/ponds
+
+## Front
+
+- Index: http://localhost:300/
+- Farms: http://localhost:3000/farms
+- Ponds: http://localhost:3000/ponds

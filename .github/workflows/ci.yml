@@ -18,4 +18,4 @@ jobs:
           time: '15s'
 
       - name: Run the tests
-        run: make test
+        run: docker-compose up -d

@@ -18,6 +18,6 @@ describe('Domain Farm', () => {
     expect(farm.name).toEqual(data.name)
   })
   it('should create a farm with size 0', async () => {
-    expect(farm.total_size).toEqual(data.total_size)
+    expect(farm.totalSize).toEqual(data.total_size)
   })
 })
