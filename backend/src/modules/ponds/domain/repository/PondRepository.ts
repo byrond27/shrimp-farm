@@ -5,4 +5,5 @@ export interface PondRepository {
   editPondById(data: any): Promise<any>
   deletePondById(id: string): Promise<any>
   getPonds(): Promise<any>
+  getPondById(id: string): Promise<any>
 }

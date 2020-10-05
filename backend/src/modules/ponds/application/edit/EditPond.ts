@@ -1,17 +1,25 @@
 import { inject, injectable } from 'inversify'
 import 'reflect-metadata'
 import { PondRepository } from '../../domain/repository/PondRepository'
+import { FarmRepository } from '../../../farms/domain/repository/FarmRepository'
 import { Pond } from '../../domain/Pond'
+import { Farm } from '../../../farms/domain/Farm'
 import { MongoosePondRepository } from '../../shared/infrastructure/persistence/MongoosePondRepository'
+import { MongooseFarmRepository } from '../../../farms/shared/infrastructure/persistence/MongooseFarmRepository'
 // @ts-ignore
 const validation = require('./validation/editPondValidation')
 
 @injectable()
 export class EditPond {
   protected pondRepository: PondRepository
+  protected farmRepository: FarmRepository
 
-  constructor(@inject(MongoosePondRepository) pondRepository: PondRepository) {
+  constructor(
+    @inject(MongoosePondRepository) pondRepository: PondRepository,
+    @inject(MongooseFarmRepository) farmRepository: FarmRepository
+  ) {
     this.pondRepository = pondRepository
+    this.farmRepository = farmRepository
   }
 
   async execute(req: any, res: any) {
@@ -25,7 +33,21 @@ export class EditPond {
       req.body.name,
       req.body.size
     )
+
+    const currentPond = await this.pondRepository.getPondById(newPond.id)
+
+    const currentFarm = await this.farmRepository.getFarmByID(req.body.farmID)
+
+    const farm = new Farm(
+      currentFarm.id,
+      currentFarm.name,
+      currentFarm.totalSize - currentPond.size + newPond.size
+    )
+
+    await this.farmRepository.editFarmById(farm)
+
     const editPond = await this.pondRepository.editPondById(newPond)
+
     return res.status(200).json(editPond)
   }
 }

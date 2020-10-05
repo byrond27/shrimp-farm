@@ -23,7 +23,10 @@ router.post('/', (req: any, res: any) => {
 })
 
 router.put('/', (req: any, res: any) => {
-  const editStore = new EditPond(new MongoosePondRepository())
+  const editStore = new EditPond(
+    new MongoosePondRepository(),
+    new MongooseFarmRepository()
+  )
   return editStore.execute(req, res)
 })
 

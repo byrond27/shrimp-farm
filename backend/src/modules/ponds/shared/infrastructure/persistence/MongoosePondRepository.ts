@@ -34,7 +34,7 @@ export class MongoosePondRepository implements PondRepository {
         returnOriginal: false,
       })
 
-      return new Pond(result.id, result.farmID, result.name, result.total_size)
+      return new Pond(result.id, result.farmID, result.name, result.size)
     } catch (err) {
       console.log(err)
     }
@@ -53,6 +53,15 @@ export class MongoosePondRepository implements PondRepository {
     try {
       const results = await PondSchema.find({})
       return results
+    } catch (err) {
+      console.log(err)
+    }
+  }
+
+  async getPondById(id: string): Promise<any> {
+    try {
+      const result = await PondSchema.findOne({ id: id })
+      return new Pond(result.id, result.farmID, result.name, result.size)
     } catch (err) {
       console.log(err)
     }
