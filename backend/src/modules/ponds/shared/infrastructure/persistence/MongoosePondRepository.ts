@@ -38,6 +38,7 @@ export class MongoosePondRepository implements PondRepository {
       const update = {
         name: data.name,
         size: data.size,
+        farmID: data.farmID,
       }
       let result = await PondSchema.findOneAndUpdate(filter, update, {
         returnOriginal: false,
