@@ -27,3 +27,11 @@ code {
   letter-spacing: 1.5p;
   margin-top: 1rem;
 }
+
+.d-flex-inline{
+  display: 'inline-flex'
+}
+
+.mt-8{
+  margin-top: 8;
+}

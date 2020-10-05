@@ -1,10 +1,11 @@
 import React, { useEffect, useState, useContext } from 'react'
 
 import classnames from 'classnames'
-import M from 'materialize-css'
 import 'react-responsive-modal/styles.css'
 import { Modal } from 'react-responsive-modal'
 import { FarmContext } from '../../../Context/FarmContext'
+import toast from '../../../Components/toast'
+import noItems from '../../../Components/noItems'
 
 import {
   createFarm,
@@ -73,25 +74,10 @@ export default function Farms() {
     toast('Farm updated!')
   }
 
-  const toast = (message) => {
-    let toastHTML = '<span className="rounded">' + message + '</span>'
-    M.toast({ html: toastHTML, classes: 'rounded green' })
-  }
-
   const openModal = () => {
     setModalState(true)
     setIsEdit(false)
   }
-
-  const noFarms = (
-    <div className={'container'}>
-      <div className={'row'}>
-        <div className={'col s12 center'}>
-          <h5> No Farms Created</h5>
-        </div>
-      </div>
-    </div>
-  )
 
   const listFarms =
     countFarms > 0 &&
@@ -99,7 +85,7 @@ export default function Farms() {
       <tr key={farm.id}>
         <td>{farm.name}</td>
         <td className={'center-align'}>{farm.total_size}</td>
-        <td className={'center'} style={{ display: 'inline-flex' }}>
+        <td className={'center d-flex-inline'}>
           <div className={'waves-effect waves-light white btn'}>
             <i
               onClick={(e) => onClickEdit(farm)}
@@ -149,7 +135,7 @@ export default function Farms() {
             )}
           </div>
           <div
-            onClick={(e) => openModal()}
+            onClick={() => openModal()}
             className='btn btn-large waves-effect green darken-1 hoverable custom-button'>
             Create Farm
             <i className='material-icons right'>add</i>
@@ -191,27 +177,19 @@ export default function Farms() {
                 <span className='red-text'>{errors.name}</span>
               </div>
               <div className='col s12 center'>
-                {isEdit ? (
-                  <button
-                    onClick={onEditFarm}
-                    type='submit'
-                    className='btn btn-large waves-effect waves-light hoverable blue accent-3 custom-button'>
-                    Update
-                    <i className='material-icons right'>create</i>
-                  </button>
-                ) : (
-                  <button
-                    onClick={onCreateFarm}
-                    type='submit'
-                    className='btn btn-large waves-effect waves-light hoverable blue accent-3 custom-button'>
-                    Create
-                    <i className='material-icons right'>add_circle</i>
-                  </button>
-                )}
+                <button
+                  onClick={isEdit ? onEditFarm : onCreateFarm}
+                  type='submit'
+                  className='btn btn-large waves-effect waves-light hoverable blue accent-3 custom-button'>
+                  {isEdit ? 'Update' : 'Create'}
+                  <i className='material-icons right'>
+                    {isEdit ? 'create' : 'add_circle'}{' '}
+                  </i>
+                </button>
               </div>
             </div>
           </Modal>
-          {countFarms > 0 ? table : noFarms}
+          {countFarms > 0 ? table : noItems('Farms')}
         </div>
       </div>
     </div>
