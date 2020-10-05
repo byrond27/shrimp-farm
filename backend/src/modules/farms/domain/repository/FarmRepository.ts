@@ -5,4 +5,5 @@ export interface FarmRepository {
   editFarmById(data: any): Promise<any>
   deleteFarmById(id: string): Promise<any>
   getFarms(): Promise<any>
+  getFarmByID(id: string): Promise<any>
 }

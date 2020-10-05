@@ -55,4 +55,13 @@ export class MongooseFarmRepository implements FarmRepository {
       console.log(err)
     }
   }
+
+  async getFarmByID(id: String): Promise<any> {
+    try {
+      const result = await FarmSchema.findOne({ id: id })
+      return new Farm(result.id, result.name, result.total_size)
+    } catch (err) {
+      console.log(err)
+    }
+  }
 }

@@ -4,6 +4,7 @@ import 'reflect-metadata'
 import { PondRepository } from '../../domain/repository/PondRepository'
 import { FarmRepository } from '../../../farms/domain/repository/FarmRepository'
 import { Pond } from '../../domain/Pond'
+import { Farm } from '../../../farms/domain/Farm'
 import { MongoosePondRepository } from '../../shared/infrastructure/persistence/MongoosePondRepository'
 import { MongooseFarmRepository } from '../../../farms/shared/infrastructure/persistence/MongooseFarmRepository'
 // @ts-ignore
@@ -34,7 +35,14 @@ export class CreatePond {
       req.body.name,
       req.body.size
     )
+    const currentFarm = await this.farmRepository.getFarmByID(req.body.farmID)
 
+    const farm = new Farm(
+      currentFarm.id,
+      currentFarm.name,
+      currentFarm.totalSize + newPond.size
+    )
+    await this.farmRepository.editFarmById(farm)
     await res.json(this.pondRepository.createPond(newPond))
   }
 }
