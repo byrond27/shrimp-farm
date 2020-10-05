@@ -5,14 +5,14 @@ import { MongooseFarmRepository } from '../../../../modules/farms/shared/infrast
 import { CreatePond } from '../../../../modules/ponds/application/create/CreatePond'
 import { EditPond } from '../../../../modules/ponds/application/edit/EditPond'
 import { DeletePond } from '../../../../modules/ponds/application/delete/DeletePond'
-// import { GetPonds } from '../../../../modules/ponds/application/get/GetPonds'
+import { GetPonds } from '../../../../modules/ponds/application/get/GetPonds'
 
 const router = express.Router()
 
-// router.get('/', (req: any, res: any) => {
-//   const getPond = new GetPonds(new MongoosePondRepository())
-//   return getPond.execute(req, res)
-// })
+router.get('/', (req: any, res: any) => {
+  const getPond = new GetPonds(new MongoosePondRepository())
+  return getPond.execute(req, res)
+})
 
 router.post('/', (req: any, res: any) => {
   const createPond = new CreatePond(
