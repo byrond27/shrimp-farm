@@ -35,13 +35,15 @@ export class DeletePond {
       currentPond.farmID
     )
 
-    const farm = new Farm(
-      currentFarm.id,
-      currentFarm.name,
-      Number(currentFarm.totalSize) - Number(currentPond.size)
-    )
+    if (currentFarm !== undefined) {
+      const farm = new Farm(
+        currentFarm.id,
+        currentFarm.name,
+        Number(currentFarm.totalSize) - Number(currentPond.size)
+      )
+      await this.farmRepository.editFarmById(farm)
+    }
 
-    await this.farmRepository.editFarmById(farm)
     await this.pondRepository.deletePondById(req.body.id)
     return res.status(200).json('Pond Deleted')
   }

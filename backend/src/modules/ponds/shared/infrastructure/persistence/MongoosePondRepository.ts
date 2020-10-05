@@ -5,6 +5,15 @@ import { Pond } from '../../../domain/Pond'
 const PondSchema = require('./models/Pond')
 
 export class MongoosePondRepository implements PondRepository {
+  async getPonds(): Promise<any> {
+    try {
+      const results = await PondSchema.find({})
+      return results
+    } catch (err) {
+      console.log(err)
+    }
+  }
+
   createPond(pond: Pond): Pond | any {
     try {
       const savePond = new PondSchema({
@@ -29,6 +38,7 @@ export class MongoosePondRepository implements PondRepository {
       const update = {
         name: data.name,
         size: data.size,
+        farmID: data.farmID,
       }
       let result = await PondSchema.findOneAndUpdate(filter, update, {
         returnOriginal: false,
@@ -49,19 +59,19 @@ export class MongoosePondRepository implements PondRepository {
     }
   }
 
-  async getPonds(): Promise<any> {
+  async getPondById(id: string): Promise<any> {
     try {
-      const results = await PondSchema.find({})
-      return results
+      const result = await PondSchema.findOne({ id: id })
+      return new Pond(result.id, result.farmID, result.name, result.size)
     } catch (err) {
       console.log(err)
     }
   }
 
-  async getPondById(id: string): Promise<any> {
+  async deletePondsByFarmID(id: string): Promise<any> {
     try {
-      const result = await PondSchema.findOne({ id: id })
-      return new Pond(result.id, result.farmID, result.name, result.size)
+      const result = await PondSchema.deleteMany({ farmID: id })
+      return result
     } catch (err) {
       console.log(err)
     }

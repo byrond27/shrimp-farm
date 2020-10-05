@@ -4,10 +4,9 @@ import Farms from './Components/pages/Farms'
 import Ponds from './Components/pages/Ponds'
 import Navbar from './Components/layout/NavBar'
 import Sidebar from './Components/dashboard/Sidebar'
-
 import Dashboard from './Components/dashboard/Dashboard'
-import './App.css'
 import FarmContextProvider from './Context/FarmContext'
+import './App.css'
 
 function App() {
   return (

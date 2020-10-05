@@ -5,8 +5,8 @@ import { Link } from 'react-router-dom'
 export default function Sidebar(props) {
   useEffect(() => {
     let sidenav = document.querySelector('#slide-out')
-    M.Sidenav.init(sidenav, {})
     let elems = document.querySelectorAll('.tooltipped')
+    M.Sidenav.init(sidenav, {})
     M.Tooltip.init(elems)
   })
 
@@ -16,7 +16,7 @@ export default function Sidebar(props) {
         <li>
           <div className='user-view center'>
             <div className='background'>
-              <img src='https://picsum.photos/300/?blur' alt={'backgroud'} />
+              <img src='https://picsum.photos/300/?blur' alt={'background'} />
             </div>
             <img
               className='circle'

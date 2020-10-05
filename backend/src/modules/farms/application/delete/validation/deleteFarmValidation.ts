@@ -8,6 +8,7 @@ module.exports = function validation(data: any) {
   if (Validator.isEmpty(data.id)) {
     errors.id = 'ID is required'
   }
+
   return {
     errors,
     isValid: isEmpty(errors),
