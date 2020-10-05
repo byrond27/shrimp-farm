@@ -1,4 +1,5 @@
 import { GET_ERRORS, GET_FARMS } from '../../actions/Farms'
+import { GET_PONDS } from '../../actions/Ponds'
 
 export const FarmReducer = (state, action) => {
   switch (action.type) {
@@ -12,6 +13,12 @@ export const FarmReducer = (state, action) => {
       return {
         ...state,
         farms: action.payload,
+      }
+
+    case GET_PONDS:
+      return {
+        ...state,
+        ponds: action.payload,
       }
     default:
       return state
