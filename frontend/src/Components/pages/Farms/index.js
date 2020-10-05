@@ -27,7 +27,7 @@ export default function Farms() {
 
   useEffect(() => {
     getFarms(context.dispatch)
-  }, [context.dispatch])
+  }, [isModalOpen, context.dispatch])
 
   const onDeleteFarm = (id, name) => {
     if (window.confirm('Are you sure to delete the farm ' + name + '?')) {
