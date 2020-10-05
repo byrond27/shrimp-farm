@@ -10,7 +10,7 @@ jobs:
       - uses: actions/checkout@v1
 
       - name: Start all the environment
-        run: docker-compose up -d
+        run: make up-detached
 
       - name: Wait for the environment to get up
         uses: jakejarvis/wait-action@master
