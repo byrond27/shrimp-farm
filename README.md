@@ -2,7 +2,7 @@
 
 ![CI Develop](https://github.com/byrond27/shrimp-farm/workflows/CI/badge.svg?branch=develop)
 
-Shrimp Monorepo backend (Rest API)
+Shrimp Monorepo backend (Rest API) and Frontend
 
 ## Requirements
 
@@ -16,11 +16,16 @@ Shrimp Monorepo backend (Rest API)
 ### Configuration
 
 - Backend (backend/.env)
+
   - Change .env variables (If you want):
     - `PORT=5000`
     - `MONGO_HOSTNAME=mongo`
     - `MONGO_DB=shrimp_farm`
     - `MONGO_PORT=27017`
+
+- Frontend
+  - Change proxy in package.json (now is working with docker)
+    - `"proxy": "http://myapp-node-express:5000"`
 
 ### Docker
 
