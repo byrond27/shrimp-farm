@@ -66,6 +66,7 @@ export default function Farms() {
       toast('Farm created!')
       getFarms(context.dispatch)
       setIsUpdate(true)
+      setName('')
     }
   }
 
@@ -81,6 +82,7 @@ export default function Farms() {
       editFarm(newFarm, context.dispatch)
       setModalState(false)
       toast('Farm updated!')
+      setCurrentFarmName('')
     }
   }
 
@@ -90,9 +92,9 @@ export default function Farms() {
     setIsUpdate(true)
   }
 
-  const validation = farms.filter((farm) => farm.name === name)
-
-  console.log(validation)
+  const nameValidation = farms.filter(
+    (farm) => farm.name === name || farm.name === currentFarmName
+  )
 
   const listFarms =
     countFarms > 0 &&
@@ -190,11 +192,15 @@ export default function Farms() {
                   Name
                 </label>
                 <span className='red-text'>{errors.name}</span>
+                {nameValidation.length > 0 && (
+                  <span className='red-text'>Name already exist</span>
+                )}
               </div>
               <div className='col s12 center'>
                 <button
                   onClick={isEdit ? onEditFarm : onCreateFarm}
                   type='submit'
+                  disabled={nameValidation.length > 0 ? true : false}
                   className='btn btn-large waves-effect waves-light hoverable blue accent-3 custom-button'>
                   {isEdit ? 'Update' : 'Create'}
                   <i className='material-icons right'>

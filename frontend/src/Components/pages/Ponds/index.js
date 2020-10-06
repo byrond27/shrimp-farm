@@ -101,6 +101,9 @@ export default function Ponds() {
       setModalState(false)
       toast('Pond updated!')
       getPonds(context.dispatch)
+      setCurrentPondName('')
+      setCurrentPondSize('')
+      setCurrentFarm('')
     }
   }
 
@@ -158,6 +161,10 @@ export default function Ponds() {
       </thead>
       <tbody>{listPonds}</tbody>
     </table>
+  )
+
+  const nameValidation = ponds.filter(
+    (pond) => pond.name === name || pond.name === currentPondName
   )
 
   return (
@@ -229,6 +236,9 @@ export default function Ponds() {
                   Name
                 </label>
                 <span className='red-text'>{errors.name}</span>
+                {nameValidation.length > 0 && (
+                  <span className='red-text'>Name already exist</span>
+                )}
               </div>
               <div className='input-field col s12'>
                 <input
@@ -254,6 +264,7 @@ export default function Ponds() {
                 <button
                   onClick={isEdit ? onEditPond : onCreatePond}
                   type='submit'
+                  disabled={nameValidation.length > 0 ? true : false}
                   className='btn btn-large waves-effect waves-light hoverable blue accent-3 custom-button'>
                   {isEdit ? 'Update' : 'Create'}
                   <i className='material-icons right'>
