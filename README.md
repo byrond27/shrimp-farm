@@ -49,6 +49,6 @@ Shrimp Monorepo backend (Rest API) and Frontend
 
 ### Front
 
-- Index: http://localhost:3000/
+- Dashboard: http://localhost:3000/
 - Farms: http://localhost:3000/farms
 - Ponds: http://localhost:3000/ponds
