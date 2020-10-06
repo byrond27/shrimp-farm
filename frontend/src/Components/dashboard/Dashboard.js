@@ -39,23 +39,23 @@ export default function Dashboard() {
                 </p>
                 <p>
                   Total Size Farms
-                  <span className='badge'>{totalSize(sizeFarms)}</span>
+                  <span className='badge'>{totalSize(sizeFarms).toFixed(2)}</span>
                 </p>
                 {farms.length > 0 && (
                   <>
                     <p>
                       Farms average size
                       <span className='badge'>
-                        {average(totalSize(sizeFarms), farms.length)}
+                        {average(totalSize(sizeFarms), farms.length).toFixed(2)}
                       </span>
                     </p>
                     <p>
                       Maximum Size Farm
-                      <span className='badge'>{maximum(sizeFarms)}</span>
+                      <span className='badge'>{maximum(sizeFarms).toFixed(2)}</span>
                     </p>
                     <p>
                       Minimum Size Farm
-                      <span className='badge'>{minimum(sizeFarms)}</span>
+                      <span className='badge'>{minimum(sizeFarms).toFixed(2)}</span>
                     </p>
                   </>
                 )}
@@ -74,23 +74,23 @@ export default function Dashboard() {
                 </p>
                 <p>
                   Total Ponds Size
-                  <span className='badge'>{totalSize(sizePonds)}</span>
+                  <span className='badge'>{totalSize(sizePonds).toFixed(2)}</span>
                 </p>
                 {ponds.length > 0 && (
                   <>
                     <p>
                       Ponds average size
                       <span className='badge'>
-                        {average(totalSize(sizeFarms), ponds.length)}
+                        {average(totalSize(sizeFarms), ponds.length).toFixed(2)}
                       </span>
                     </p>
                     <p>
                       Maximum size pond
-                      <span className='badge'>{maximum(sizePonds)}</span>
+                      <span className='badge'>{maximum(sizePonds).toFixed(2)}</span>
                     </p>
                     <p>
                       Minimum size pond
-                      <span className='badge'>{minimum(sizePonds)}</span>
+                      <span className='badge'>{minimum(sizePonds).toFixed(2)}</span>
                     </p>
                   </>
                 )}
