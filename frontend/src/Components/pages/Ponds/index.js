@@ -36,7 +36,7 @@ export default function Ponds() {
     getPonds(context.dispatch)
     getFarms(context.dispatch)
     setIsUpdate(false)
-  }, [isUpdate, context.dispatch])
+  }, [isUpdate, isModalOpen, context.dispatch])
 
   const onDeletePond = (id, name) => {
     if (window.confirm('Are you sure to delete the pond ' + name + '?')) {
@@ -44,8 +44,8 @@ export default function Ponds() {
         id: id,
       }
       deletePond(pond, context.dispatch)
-      setIsUpdate(true)
     }
+    setIsUpdate(true)
   }
 
   const onClickEdit = (pond) => {
@@ -61,6 +61,7 @@ export default function Ponds() {
   const openModal = () => {
     setModalState(true)
     setIsEdit(false)
+    setIsUpdate(true)
   }
 
   const onCreatePond = (e) => {
@@ -91,10 +92,16 @@ export default function Ponds() {
     }
 
     e.preventDefault()
-    editPond(newPond, context.dispatch)
-    setModalState(false)
-    toast('Pond updated!')
-    getPonds(context.dispatch)
+    if (
+      currentPondName !== '' &&
+      currentPondSize !== '' &&
+      currentFarmID !== ''
+    ) {
+      editPond(newPond, context.dispatch)
+      setModalState(false)
+      toast('Pond updated!')
+      getPonds(context.dispatch)
+    }
   }
 
   const optionsFarms =

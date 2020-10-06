@@ -14,6 +14,8 @@ import {
   editFarm,
 } from '../../../Context/actions/Farms'
 
+import { getPonds } from '../../../Context/actions/Ponds'
+
 export default function Farms() {
   const context = useContext(FarmContext)
   const { errors, farms } = context.state
@@ -28,6 +30,7 @@ export default function Farms() {
 
   useEffect(() => {
     getFarms(context.dispatch)
+    getPonds(context.dispatch)
     setIsUpdate(false)
   }, [isUpdate, context.dispatch])
 
@@ -38,8 +41,8 @@ export default function Farms() {
       }
       deleteFarm(farm, context.dispatch)
       getFarms(context.dispatch)
-      setIsUpdate(true)
     }
+    setIsUpdate(true)
   }
 
   const onClickEdit = (farm) => {
@@ -72,16 +75,24 @@ export default function Farms() {
       name: currentFarmName,
       size: currentFarmSize,
     }
-    e.preventDefault()
-    editFarm(newFarm, context.dispatch)
-    setModalState(false)
-    toast('Farm updated!')
+
+    if (currentFarmName !== '') {
+      e.preventDefault()
+      editFarm(newFarm, context.dispatch)
+      setModalState(false)
+      toast('Farm updated!')
+    }
   }
 
   const openModal = () => {
     setModalState(true)
     setIsEdit(false)
+    setIsUpdate(true)
   }
+
+  const validation = farms.filter((farm) => farm.name === name)
+
+  console.log(validation)
 
   const listFarms =
     countFarms > 0 &&
