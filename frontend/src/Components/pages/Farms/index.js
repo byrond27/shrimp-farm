@@ -24,10 +24,12 @@ export default function Farms() {
   const [currentFarmName, setCurrentFarmName] = useState('')
   const [currentFarmId, setCurrentFarmId] = useState('')
   const [currentFarmSize, setCurrentFarmSize] = useState('')
+  const [isUpdate, setIsUpdate] = useState(false)
 
   useEffect(() => {
     getFarms(context.dispatch)
-  }, [isModalOpen, context.dispatch])
+    setIsUpdate(false)
+  }, [isUpdate, context.dispatch])
 
   const onDeleteFarm = (id, name) => {
     if (window.confirm('Are you sure to delete the farm ' + name + '?')) {
@@ -36,6 +38,7 @@ export default function Farms() {
       }
       deleteFarm(farm, context.dispatch)
       getFarms(context.dispatch)
+      setIsUpdate(true)
     }
   }
 
@@ -55,10 +58,11 @@ export default function Farms() {
     }
     e.preventDefault()
     if (name !== '') {
-      createFarm(newFarm, context.dispatch)
       setModalState(false)
+      createFarm(newFarm, context.dispatch)
       toast('Farm created!')
       getFarms(context.dispatch)
+      setIsUpdate(true)
     }
   }
 
@@ -84,7 +88,7 @@ export default function Farms() {
     farms.map((farm) => (
       <tr key={farm.id}>
         <td>{farm.name}</td>
-        <td className={'center-align'}>{farm.total_size}</td>
+        <td className={'center-align'}>{farm.total_size.toFixed(2)}</td>
         <td className={'center d-flex-inline'}>
           <div className={'waves-effect waves-light white btn'}>
             <i
@@ -114,7 +118,7 @@ export default function Farms() {
       <thead>
         <tr>
           <th>Name</th>
-          <th className={'center-align'}>Total Size</th>
+          <th className={'center-align'}>Total Size (Hectares)</th>
           <th className={'center-align'}>Options</th>
         </tr>
       </thead>

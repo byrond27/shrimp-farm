@@ -30,11 +30,13 @@ export default function Ponds() {
   const [currentPondSize, setCurrentPondSize] = useState('')
   const [currentFarmID, setCurrentFarm] = useState('')
   const countPonds = ponds && ponds.length
+  const [isUpdate, setIsUpdate] = useState(false)
 
   useEffect(() => {
     getPonds(context.dispatch)
     getFarms(context.dispatch)
-  }, [isModalOpen, context.dispatch])
+    setIsUpdate(false)
+  }, [isUpdate, context.dispatch])
 
   const onDeletePond = (id, name) => {
     if (window.confirm('Are you sure to delete the pond ' + name + '?')) {
@@ -42,14 +44,14 @@ export default function Ponds() {
         id: id,
       }
       deletePond(pond, context.dispatch)
-      getPonds(context.dispatch)
-      getFarms(context.dispatch)
+      setIsUpdate(true)
     }
   }
 
   const onClickEdit = (pond) => {
     setModalState(true)
     setIsEdit(true)
+    setIsUpdate(true)
     setCurrentPondId(pond.id)
     setCurrentPondName(pond.name)
     setCurrentPondSize(pond.size)
@@ -69,10 +71,14 @@ export default function Ponds() {
     }
     e.preventDefault()
     if (name !== '' && size !== '' && farm !== '') {
-      createPond(newPond, context.dispatch)
       setModalState(false)
+      createPond(newPond, context.dispatch)
       toast('Pond created!')
       getPonds(context.dispatch)
+      setIsUpdate(true)
+      setName('')
+      setSize('')
+      setFarm('')
     }
   }
 
@@ -139,7 +145,7 @@ export default function Ponds() {
         <tr>
           <th>Name</th>
           <th className={'center-align'}>Farm Name</th>
-          <th className={'center-align'}>Size</th>
+          <th className={'center-align'}>Size (Hectares)</th>
           <th className={'center-align'}>Options</th>
         </tr>
       </thead>
