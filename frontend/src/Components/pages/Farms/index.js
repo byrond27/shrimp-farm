@@ -90,6 +90,7 @@ export default function Farms() {
     setModalState(true)
     setIsEdit(false)
     setIsUpdate(true)
+    setCurrentFarmName('')
   }
 
   const nameValidation = farms.filter(
@@ -102,7 +103,7 @@ export default function Farms() {
       <tr key={farm.id}>
         <td>{farm.name}</td>
         <td className={'center-align'}>{farm.total_size.toFixed(2)}</td>
-        <td className={'center d-flex-inline'}>
+        <td className={'center'}>
           <div className={'waves-effect waves-light white btn'}>
             <i
               onClick={(e) => onClickEdit(farm)}
@@ -111,7 +112,7 @@ export default function Farms() {
               data-tooltip='Editar'>
               create
             </i>
-          </div>{' '}
+          </div>
           <div
             className={'waves-effect waves-light white btn'}
             onClick={() => onDeleteFarm(farm.id, farm.name)}>
@@ -168,8 +169,7 @@ export default function Farms() {
                 <h5>{isEdit ? 'Edit Farm' : 'Create Farm'}</h5>
                 {isEdit ? (
                   <p className='grey-text text-darken-1'>
-                    Farm:
-                    {currentFarmName}
+                    Farm: {currentFarmName}
                   </p>
                 ) : null}
               </div>

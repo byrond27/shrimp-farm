@@ -26,6 +26,11 @@ export default function Sidebar(props) {
           </div>
         </li>
         <li>
+          <Link to={'/'} className={'sidenav-close'}>
+            <i className='material-icons'>dashboard</i>Dashboard
+          </Link>
+        </li>
+        <li>
           <Link to={'/farms'} className={'sidenav-close'}>
             <i className='material-icons'>agriculture</i>Farms
           </Link>

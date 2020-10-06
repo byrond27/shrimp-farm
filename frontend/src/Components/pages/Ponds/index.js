@@ -62,6 +62,7 @@ export default function Ponds() {
     setModalState(true)
     setIsEdit(false)
     setIsUpdate(true)
+    setCurrentPondName('')
   }
 
   const onCreatePond = (e) => {
@@ -115,6 +116,10 @@ export default function Ponds() {
       </option>
     ))
 
+  const nameValidation = ponds.filter(
+    (pond) => pond.name === name || pond.name === currentPondName
+  )
+
   const listPonds =
     countPonds > 0 &&
     ponds.map((pond) => (
@@ -125,7 +130,7 @@ export default function Ponds() {
             farms.find((farm) => farm.id === pond.farmID).name}
         </td>
         <td className={'center-align'}>{pond.size}</td>
-        <td className={'center d-flex-inline'}>
+        <td className={'center'}>
           <div className={'waves-effect waves-light white btn'}>
             <i
               onClick={(e) => onClickEdit(pond)}
@@ -163,10 +168,6 @@ export default function Ponds() {
     </table>
   )
 
-  const nameValidation = ponds.filter(
-    (pond) => pond.name === name || pond.name === currentPondName
-  )
-
   return (
     <div className='container'>
       <div className='row mt-4'>
@@ -196,8 +197,7 @@ export default function Ponds() {
                 <h5>{isEdit ? 'Edit Pond' : 'Create Pond'}</h5>
                 {isEdit ? (
                   <p className='grey-text text-darken-1'>
-                    Pond:
-                    {currentPondName}
+                    Pond: {currentPondName}
                   </p>
                 ) : null}
               </div>

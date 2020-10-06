@@ -16,22 +16,43 @@ code {
   margin-top: 4rem;
 }
 
-.header-page{
+.header-page {
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
 
-.custom-button{
+.custom-button {
   border-radius: 3px;
   letter-spacing: 1.5p;
   margin-top: 1rem;
 }
 
-.d-flex-inline{
-  display: 'inline-flex'
+.justify-content-space-around {
+  justify-content: space-around;
 }
 
-.mt-8{
-  margin-top: 8;
+.d-flex {
+  display: flex;
+}
+
+.mt-8 {
+  margin-top: 8px;
+}
+
+.mt-5 {
+  margin-top: 5px;
+}
+
+.margin-0 {
+  margin: 0 !important;
+}
+
+.badge {
+  color: white !important;
+}
+
+.card {
+  width: 300px !important;
+  margin: 0 10px;
 }
